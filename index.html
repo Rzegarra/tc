@@ -4,14 +4,21 @@
     <meta charset="utf-8">
     <title>trabajo tc</title>
     <link rel="stylesheet" href="css/master.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 
   </head>
   <body>
     <h1>teoria de la computación</h1>
-    <form class="datos" action="index.html" method="post">
-      <input type="text"  id="datos" name="" value="" placeholder="expresion regular">
+    <form class="form" action="index.html" method="post">
+      <input type="text" class="datos" id="datos" name="" value="" placeholder="expresion regular">
       <button type="button" id="button" name="button" >transformar</button>
     </form>
+    <div class="grafico">
+      MAQUINA DE MOORE
+      <svg class="graph"> </svg>
+    </div>
+    <div class="grafico">MAQUINA DE MEELY</div>
+    <div class="grafico">GLC</div>
     <script src="js/jquery.js" charset="utf-8"></script>
     <script src="js/main.js" charset="utf-8"></script>
   </body>

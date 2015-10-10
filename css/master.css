@@ -6,5 +6,57 @@ body{
   background-color: #fff;
 }
 h1{
-  color: blue;
+  color: #888;
+}
+.datos{
+  font-size: 18px;
+  width:500px;;
+  height:35px;
+}
+.grafico{
+  display: inline-block;
+  width: 600px;
+  height: 300px;
+  border-style: solid;
+  border-color: black;
+  margin-top: 30px;
+  text-align: center;
+  font-size: 13px
+}
+.graph{
+  border-style: solid;
+  border-color: black;
+}
+path.link {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.5px;
+}
+path.textpath {
+    fill: none;
+    stroke: none;
+}
+
+marker#licensing {
+  fill: green;
+}
+
+path.link.licensing {
+  stroke: green;
+}
+
+path.link.resolved {
+  stroke-dasharray: 0,2 1;
+}
+
+circle {
+  stroke: #000;
+  fill:#ddd;
+  stroke-width: 1px;
+
+}
+
+text {
+  font: 10px sans-serif;
+  pointer-events: none;
 }
