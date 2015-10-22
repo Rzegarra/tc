@@ -78,7 +78,7 @@ function limpiar(a)
   }
 }
 function graficar(){
-  var links = [
+ var links = [
     {source: "q0", target: "q1", type: "000,110"},
     {source: "q0", target: "q2", type: "101"},
     {source: "q2", target: "q3", type: "111"}
@@ -92,34 +92,34 @@ function graficar(){
     link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
   });
 
-  var w = 960,
+  var w = 500,
       h = 500;
 
   var force = d3.layout.force()
       .nodes(d3.values(nodes))
       .links(links)
       .size([w, h])
-      .linkDistance(120)
+      .linkDistance(90)
       .charge(-300)
       .on("tick", tick)
       .start();
 
   var svg = d3.select("body").append("svg:svg")
       .attr("width", w)
-      .attr("height", h);
+      .attr("height", h)
 
   // Per-type markers, as they don't inherit styles.
-  svg.append("svg:defs").selectAll("marker")
+  svg.append("defs").selectAll("marker")
       .data(["suit", "licensing", "resolved"])
-    .enter().append("svg:marker")
-      .attr("id", String)
+    .enter().append("marker")
+      .attr("id", function(d) { return d; })
       .attr("viewBox", "0 -5 10 10")
       .attr("refX", 15)
       .attr("refY", -1.5)
       .attr("markerWidth", 6)
       .attr("markerHeight", 6)
       .attr("orient", "auto")
-    .append("svg:path")
+    .append("path")
       .attr("d", "M0,-5L10,0L0,5");
 
       var link = svg.append("svg:g").selectAll("g.link")
@@ -138,7 +138,7 @@ function graficar(){
   var circle = svg.append("svg:g").selectAll("circle")
       .data(force.nodes())
     .enter().append("svg:circle")
-      .attr("r", 20)
+      .attr("r", 10)
       .call(force.drag);
 
   var text = svg.append("svg:g").selectAll("g")
@@ -151,10 +151,7 @@ function graficar(){
       .attr("y", ".31em")
       .text(function(d) { return d.name; });
 
-  text.append("svg:text")
-      .attr("x",-6)
-      .attr("y", ".31em")
-      .text(function(d) { return d.name; });
+
 
   var path_label = svg.append("svg:g").selectAll(".path_label")
       .data(force.links())
