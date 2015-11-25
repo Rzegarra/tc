@@ -5,7 +5,11 @@ var obj=[[' ',0.05,0.1,0.25,0.05,0.1,0.25],
         ['q3','q0','q0','q0',0.2,0.25,0.4]];
 var nodos=[];
 var datos = [];
-
+var rows=$('tr').length;
+console.log('tamaño de filas = '+ rows);
+var columns=$('tr:first td').length;
+console.log('tamaño de columnas = '+ columns);
+var newColumn="<td><input type='text' id='dato'></td>"
 
 function estados(obj) {
   for (var i = 1; i < obj.length; i++) {
@@ -14,10 +18,6 @@ function estados(obj) {
 
   console.log('cantidad de estados: '+ nodos.length);
   console.log(nodos);
-  var rows=$('tr').length;
-  console.log('tamaño de filas = '+ rows);
-  var columns=$('tr:first td').length;
-  console.log('tamaño de columnas = '+ columns);
   for (var i = 0;i < columns; i++) {
     datos[i]=[];
   }
@@ -40,6 +40,16 @@ function estados(obj) {
 $(convertir).on('click',function(evento){
   estados(obj);
 });
-$(addCol).on('click',function(event){
-  alert('agregando col')
-})
+$('#addCol').on('click',function(){
+  $('tr').append(newColumn)
+});
+$('#delCol').on('click',function(){
+  var rows=$('tr').length;
+  console.log('tamaño de filas = '+ rows);
+  var columns=$('tr:first td').length;
+  console.log('tamaño de columnas = '+ columns);
+  for (var i = 0; i < rows; i++) {
+    $('tr:eq('+i+') td:last').remove();
+  }
+  console.log('entre');
+});
