@@ -5,13 +5,15 @@ var obj=[[' ',0.05,0.1,0.25,0.05,0.1,0.25],
         ['q3','q0','q0','q0',0.2,0.25,0.4]];
 var nodos=[];
 var datos = [];
-var rows=$('tr').length;
-console.log('tamaño de filas = '+ rows);
-var columns=$('tr:first td').length;
-console.log('tamaño de columnas = '+ columns);
+
 var newColumn="<td><input type='text' id='dato'></td>"
 var newRow="<tr></tr>"
 function estados(obj) {
+  var rows=$('tr').length;
+  console.log('tamaño de filas = '+ rows);
+  var columns=$('tr:first td').length;
+  console.log('tamaño de columnas = '+ columns);
+  var a=$(dato);
   for (var i = 1; i < obj.length; i++) {
     nodos[i-1]=obj[i][0];
   }
@@ -25,20 +27,14 @@ function estados(obj) {
   // datos[0][2]=2
   // datos[0][3]=3
   // datos[1][1]=1
-  var rows=$('tr').length;
-  console.log('tamaño de filas = '+ rows);
-  var columns=$('tr:first td').length;
-  console.log('tamaño de columnas = '+ columns);
-  ///////
-  var a=$(dato);
+
   var temp=0;
-  for (var i = 0; i < rows; i++) {
-    for (var j = 0; j < columns; j++) {
-      datos[i][j]=$(dato).eq(temp).val();
-      temp++;
+  for (var i = 0; i < columns; i++) {
+    for (var j = 0; j < rows; j++) {
+       datos[i][j]=$(dato).eq(temp).val();
+       temp++;
     }
   }
-  console.log(datos[0][0]);
 }
 
 $(convertir).on('click',function(evento){
