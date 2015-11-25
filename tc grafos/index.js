@@ -68,3 +68,6 @@ $('#addRow').on('click',function(){
   }
 
 });
+$('#delRow').on('click',function(){
+  $('tr:last').remove();
+});
