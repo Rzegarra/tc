@@ -107,14 +107,19 @@ function graficar(){
   var svg = d3.select("body").append("svg:svg")
       .attr("width", w)
       .attr("height", h)
-
+      //crearemos los enlaces que se aceptaran y se
+      //mandan a data :)
+var enlaces=[]
+for (var i = 0; i < links.length; i++) {
+   enlaces[i]=links[i].type
+}
   // Per-type markers, as they don't inherit styles.
   svg.append("defs").selectAll("marker")
-      .data(["suit", "licensing", "resolved"])
+      .data(enlaces)
     .enter().append("marker")
       .attr("id", function(d) { return d; })
       .attr("viewBox", "0 -5 10 10")
-      .attr("refX", 15)
+      .attr("refX", 21)
       .attr("refY", -1.5)
       .attr("markerWidth", 6)
       .attr("markerHeight", 6)
