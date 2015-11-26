@@ -1,3 +1,4 @@
+
 var obj=[[' ',0.05,0.1,0.25,0.05,0.1,0.25],
         ['q0','q1','q2','q0','-','-',0.25],
         ['q1','q2','q3','q0','-','-',0.30],
@@ -5,18 +6,37 @@ var obj=[[' ',0.05,0.1,0.25,0.05,0.1,0.25],
         ['q3','q0','q0','q0',0.2,0.25,0.4]];
 var nodos=[];
 var datos = [];
-var links={source:'q1',
-          target:'q1',
-          type:0}
-
+var links=[];
+var obj1=[{source:0,
+          target:0,
+          type:0}];
+var col;
 var newColumn="<td><input type='text' id='dato'></td>"
 var newRow="<tr></tr>"
 function makeObj(obj) {
-  for (var i = 1; i < obj.length; i++) {
-    for (var i = 0; i < obj[0].length; i++) {
 
+  col=obj[0].length;
+  var fil=obj.length;
+  var separacion=0;
+  var start=obj[0][1];
+  var recorreLinks=0;
+  for (var i2 = 2; i2<col; i2++) {
+    if(obj[0][i2]==start){
+      col=i2;
     }
   }
+  //llenamos el array de objetos para poder graficar
+  for (var i = 1; i < fil; i++) {
+    for (var j = 1; j < col; j++) {
+        obj1.target=[i][0];
+        obj1.source=obj[i][j];
+        obj1.type=obj[0][j];
+        links[recorreLinks++]=obj1;
+        // console.log('obj1 :'+obj1.target);
+    }
+
+  }
+  console.log(links);
 }
 function estados(obj) {
   var rows=$('tr').length;
@@ -50,6 +70,7 @@ function estados(obj) {
 
 $(convertir).on('click',function(evento){
   estados(obj);
+  makeObj(obj);
 });
 $('#addCol').on('click',function(){
   $('tr').append(newColumn)
