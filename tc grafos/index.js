@@ -5,9 +5,19 @@ var obj=[[' ',0.05,0.1,0.25,0.05,0.1,0.25],
         ['q3','q0','q0','q0',0.2,0.25,0.4]];
 var nodos=[];
 var datos = [];
+var links={source:'q1',
+          target:'q1',
+          type:0}
 
 var newColumn="<td><input type='text' id='dato'></td>"
 var newRow="<tr></tr>"
+function makeObj(obj) {
+  for (var i = 1; i < obj.length; i++) {
+    for (var i = 0; i < obj[0].length; i++) {
+
+    }
+  }
+}
 function estados(obj) {
   var rows=$('tr').length;
   console.log('tamaño de filas = '+ rows);
