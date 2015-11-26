@@ -35,6 +35,7 @@ function estados(obj) {
        temp++;
     }
   }
+  console.log(datos);
 }
 
 $(convertir).on('click',function(evento){

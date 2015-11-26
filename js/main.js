@@ -1,6 +1,13 @@
 $('#button').click(function(){
+  var links = [
+     {source: "q0", target: "q1", type: "000,110"},
+     {source: "q0", target: "q2", type: "101"},
+     {source: "q2", target: "q3", type: "111"},
+     {source: "q2", target: "q1", type: "101,111"}
+
+   ];
 console.log("ya estoy listo qcsm :)");
-graficar();
+graficar(links);
 console.log('grafique :) .I.');
 var prueba='((000|101)(000|010|101|111)|(010|111)(001|011|100))';
 var salidas=[];
@@ -77,12 +84,8 @@ function limpiar(a)
     }
   }
 }
-function graficar(){
- var links = [
-    {source: "q0", target: "q1", type: "000,110"},
-    {source: "q0", target: "q2", type: "101"},
-    {source: "q2", target: "q3", type: "111"}
-  ];
+function graficar(links){
+
 
   var nodes = {};
 
@@ -198,6 +201,5 @@ for (var i = 0; i < links.length; i++) {
       return "translate(" + d.x + "," + d.y + ")";
     });
   }
-
 }
 })
