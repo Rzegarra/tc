@@ -1,14 +1,15 @@
-$('#button').click(function(){
-  var links = [
-     {source: "q0", target: "q1", type: "000,110"},
-     {source: "q0", target: "q2", type: "101"},
-     {source: "q2", target: "q3", type: "111"},
-     {source: "q2", target: "q1", type: "101,111"}
+var links = [
+   {source: "q0", target: "q1", type: "000,110"},
+   {source: "q0", target: "q2", type: "101"},
+   {source: "q2", target: "q3", type: "111"},
+   {source: "q2", target: "q1", type: "101,111"}
 
-   ];
+ ];
+$('#button').click(function(){
+
+
 console.log("ya estoy listo qcsm :)");
 graficar(links);
-makeObj(obj)
 console.log('grafique :) .I.');
 var prueba='((000|101)(000|010|101|111)|(010|111)(001|011|100))';
 var salidas=[];
@@ -25,46 +26,6 @@ console.log('segunda separacion saltos= '+salidasTotales[1][0]+'-->'+salidasTota
 //  separacion(exp);
 //  console.log(exp);
 
-var obj=[[' ',0.05,0.1,0.25,0.05,0.1,0.25],
-        ['q0','q1','q2','q0','-','-',0.25],
-        ['q1','q2','q3','q0','-','-',0.30],
-        ['q2','q3','q0','q0','-',0.2,0.35],
-        ['q3','q0','q0','q0',0.2,0.25,0.4]];
-var nodos=[];
-var datos = [];
-var links=[];
-var obj1=[{source:0,
-          target:0,
-          type:0}];
-var col;
-var newColumn="<td><input type='text' id='dato'></td>"
-var newRow="<tr></tr>"
-function makeObj(obj) {
-
-  col=obj[0].length;
-  var fil=obj.length;
-  var separacion=0;
-  var start=obj[0][1];
-  var recorreLinks=0;
-  for (var i2 = 2; i2<col; i2++) {
-    if(obj[0][i2]==start){
-      col=i2;
-    }
-  }
-  //llenamos el array de objetos para poder graficar
-  for (var i = 1; i < fil; i++) {
-    for (var j = 1; j < col; j++) {
-        obj1.target=[i][0];
-        obj1.source=obj[i][j];
-        obj1.type=obj[0][j];
-        links[recorreLinks++]=obj1;
-        // console.log('obj1 :'+obj1.target);
-    }
-
-  }
-  console.log(links);
-}
-//=======================================================
 function estadosIntermedios(texto)
 {
   console.log('funcion separacion');
