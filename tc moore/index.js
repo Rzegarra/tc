@@ -10,29 +10,56 @@ var obj=[[' ',  0.05,  0.1,   0.25,  'salida'],
         ['q2',  'q3',  'q0.1','q0.4','-'],
         ['q3',  'q0.1','q0.2','q0.5','-']];
 
-//glc();
 var nodos=[];
-var datos = [];
 var q0Primas=[];
-var obj1=[];
+var entradas=[];
 var abecedario=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','S','U','V','W','X','Y','Z'];
-  estados(obj);
-   glc();
+var matrizABC=[];
+var salidas=[]
+var moore=[];
+var obj1={source:'q1',
+          target:'q1',
+          type:0};
+var links=[];
 
-function glc(){
-  estados(obj);
-  console.log('****************'+nodos.length)
-  for(var i=0;i<nodos.length;i++){
-    obj1[i]=[];
+function crearMatrizABC(){
+  var help=1;
+  for (var i = 1; obj[i][0]!='q0.*'; i++) {
+    help++;
   }
-  for (var i=0; i<nodos.length;i++){
-    for (var j=0; j<nodos.length;j++){
-      obj1[i][j]='asd';
-      
+  estados(obj);
+  for(var i=0; i<nodos.length;i++){
+    matrizABC[i]=[];
+  }  
+  matrizABC[0]=obj[0];
+  for(var i=help, j=1; i<obj.length;i++, j++){
+    matrizABC[j]=obj[i];
+  }
+  //console.log('esto es el help'+help);
+}
+
+function cambiarMatriz (matrizABC) {
+  matrizABC[1][0]=abecedario[0];
+  for (var i=0;i<nodos.length;i++){
+    for(var j=0;j<matrizABC.length;j++){
+      for(var k=0; k<matrizABC[1].length; k++){
+        if (matrizABC[j][k]==nodos[i+1]) {
+          matrizABC[j][k]=abecedario[i+1];
+        }
+      }
     }
   }
+  for (var i=0;i<q0Primas.length;i++){
+    for(var j=0;j<matrizABC.length;j++){
+      for(var k=0; k<matrizABC[1].length; k++){
+        if (matrizABC[j][k]==q0Primas[i]) {
+          matrizABC[j][k]='A';
+        }
+      }
+    }
+  }
+
 }
-//console.log(obj1);
 
 function estados(obj) {
   var help=1;
@@ -40,6 +67,7 @@ function estados(obj) {
   for (var i = 1; obj[i][0]!='q0.*'; i++) {
     help++;
   }
+  console.log(help);
   for (var i=1;help<obj.length;help++){
     nodos[i-1]=obj[help][0];
     i++;
@@ -47,42 +75,54 @@ function estados(obj) {
   for (var i = 1; obj[i][0]!='q0.*'; i++) {
     help2++;
   }
-  //console.log(help2);
   for (var i=1;i<help2;i++){
     q0Primas[i-1]=obj[i][0];
   }
-  console.log('valor de help: '+ help);
-  console.log(q0Primas);
-  console.log(abecedario);
-  //estados(obj);
-  console.log('cantidad de estados: '+ nodos.length);
-  console.log(nodos);
-  var rows=$('tr').length;
-  console.log('tamaño de filas = '+ rows);
-  var columns=$('tr:first td').length;
-  console.log('tamaño de columnas = '+ columns);
-  for (var i = 0;i < columns; i++) {
-    datos[i]=[];
+  for(var i=1; i<obj[0].length-1;i++){
+    entradas[i-1]=obj[0][i];
   }
-  // datos[0][0]=1
-  // datos[0][2]=2
-  // datos[0][3]=3
-  // datos[1][1]=1
-
-  var a=$(dato);
-  var temp=0;
-  for (var i = 0; i < rows; i++) {
-    for (var j = 0; j < columns; j++) {
-      datos[i][j]=$(dato).eq(temp).val();
-      temp++;
+  for(var i=1; i<help2; i++){
+    salidas[i-1]=obj[i][4];
+  }
+  //var temp=0;
+  var tem_obj={};
+  for (var i=help2; i<obj.length; i++){
+    for(var j=0; j<obj[0].length-2;j++){
+      //console.log('esto es el i: '+i+' esto es el j: '+j);
+      // obj1.target=obj[i][0];
+      // obj1.source=obj[i][j+1];
+      // obj1.type=obj[0][j+1]
+      // console.log(obj1);
+      //tem_obj=obj1;
+      links.push({target:obj[i][0],
+                  source:obj[i][j+1],
+                  type:obj[0][j+1]
+                  });
+      console.log(links);
+      //temp++;
+      //console.log(temp);
     }
   }
-  console.log(datos[0][0]);
+
+  //console.log(help);
+
 }
 
 $(convertir).on('click',function(evento){
- 
+  estados(obj);
+  //crearMatrizABC();
+  //cambiarMatriz(matrizABC);
+  console.log(q0Primas);
+  console.log(abecedario);
+  console.log(nodos);
+  console.log(entradas);
+  //console.log(matrizABC);
+  console.log(salidas);
+  console.log(moore);
+
+  alert('csm profe y la asdasdsa')
 });
+
 $(addCol).on('click',function(event){
   alert('agregando col')
 })
