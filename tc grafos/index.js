@@ -6,8 +6,9 @@ var obj=[[' ','0.05','0.1','0.25','0.05','0.1','0.25'],
 var nodos=[];
 var datos = [];
 var links=[];
-var obj1={};
-var col;
+var temp;
+var repeticion=[];
+var aumentaRepeticion=0;
 var newColumn="<td><input type='text' id='dato'></td>"
 var newRow="<tr></tr>"
 makeObj(obj);
@@ -20,12 +21,9 @@ var li = [
  ];
 graficar(links)
 function makeObj(obj) {
-  col=obj[0].length;
+  var col=obj[0].length;
   var fil=obj.length;
-  var separacion=0;
   var start=obj[0][1];
-  var uno=0;
-  var recorrelin=0;
   for (var i2 = 2; i2<col; i2++) {
     if(obj[0][i2]==start){
       col=i2;
@@ -35,10 +33,16 @@ function makeObj(obj) {
   //llenamos el array de objetos para poder graficar
   for (var i = 1; i < fil; i++) {
     for (var j = 1; j < col; j++) {
+      if(temp==obj[i][j]){
+        repeticion[]
+      }
+      temp=obj[i][j];
+
       links.push({
         source:obj[i][j],
         target:obj[i][0],
         type:obj[0][j]})
+        console.log('inio= '+obj[i][0]+', fin= '+obj[i][j]+', dato= '+obj[0][j]);
         // console.log('obj1 :'+obj1.target);
     }
   }
