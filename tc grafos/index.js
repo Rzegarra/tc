@@ -7,7 +7,7 @@ var nodos=[];
 var datos = [];
 var links=[];
 var temp;
-var repeticion=[];
+var repeticion='';
 var aumentaRepeticion=0;
 var newColumn="<td><input type='text' id='dato'></td>"
 var newRow="<tr></tr>"
@@ -21,6 +21,9 @@ var li = [
  ];
 graficar(links)
 function makeObj(obj) {
+  var cambio=0;
+  var sum=0;
+  var temp=0;
   var col=obj[0].length;
   var fil=obj.length;
   var start=obj[0][1];
@@ -32,21 +35,46 @@ function makeObj(obj) {
 
   //llenamos el array de objetos para poder graficar
   for (var i = 1; i < fil; i++) {
+    if (i!=cambio && obj[i-1][col-1]==obj[i-1][col-2]) {
+      sum++
+    }
+    cambio =i;
     for (var j = 1; j < col; j++) {
-      if(temp==obj[i][j]){
-        repeticion[]
-      }
-      temp=obj[i][j];
-
-      links.push({
+      console.log(obj[i][j-1]+'---'+obj[i][j]+'---'+obj[i][j+1]);
+      if(obj[i][j]==obj[i][j+1] || obj[i][j]==obj[i][j-1]){
+        console.log('es igual el de adelante o el de atras');
+        // console.log(obj[i][j]);
+        repeticion= repeticion+','+obj[0][j]
+        // console.log('soy repeticion: '+repeticion);
+        links[sum]={
         source:obj[i][j],
         target:obj[i][0],
-        type:obj[0][j]})
-        console.log('inio= '+obj[i][0]+', fin= '+obj[i][j]+', dato= '+obj[0][j]);
+        type:repeticion}
+        // if (temp!=i) {
+        //   sum++
+        // }
+        // temp=i;
+      }
+
+      else {
+        links[sum]={
+        source:obj[i][j],
+        target:obj[i][0],
+        type:obj[0][j]}
+        sum++;
+      }
+      console.log('valor de i : '+ i);
+      console.log('valor de j :'+ j);
+      console.log('posicion = ' + sum );
+      console.log('inio= '+obj[i][0]+', fin= '+obj[i][j]+', dato= '+obj[0][j] +' *** ' + repeticion);
         // console.log('obj1 :'+obj1.target);
     }
+
   }
   console.log(links);
+  for (var i = 0; i < links.length; i++) {
+    links[i]
+  }
 }
   function estados(obj) {
     var rows=$('tr').length;
