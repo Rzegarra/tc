@@ -1,9 +1,9 @@
 var matrizMoore=[[' ',  '0.05',  '0.1',   '0.25',  'salida'],
-        ['q0.1','q1',  'q2',  'q0.2',  '20'],
-        ['q0.2','q1',  'q2',  'q0.2',  '25'],
-        ['q0.3','q1',  'q2',  'q0.2',  '30'],
-        ['q0.4','q1',  'q2',  'q0.2',  '35'],
-        ['q0.5','q1',  'q2',  'q0.2',  '40'],
+        ['q0.1','q1',  'q2',  'q0.2',  '0.20'],
+        ['q0.2','q1',  'q2',  'q0.2',  '0.25'],
+        ['q0.3','q1',  'q2',  'q0.2',  '0.30'],
+        ['q0.4','q1',  'q2',  'q0.2',  '0.35'],
+        ['q0.5','q1',  'q2',  'q0.2',  '0.40'],
         //----------------------------------------
         ['q0.*','q1',  'q2',  'q0.2','-'],
         ['q1',  'q2',  'q3',  'q0.3','-'],
@@ -54,11 +54,30 @@ function convertirAmealy(matrizMoore){
       }
     }
   }
-  // for (var i=m_mealy[1].length,k=0;i<m_mealy[0].length;i++,k++){
-  //   for(var j=m_mealy[1].length,h=0;h<entradas.length;h++,j++){
-  //     m_mealy[i][j]=m_cambio[k][h];
-  //   }
-  // }
+  var temp=m_mealy[1].length;
+  for (var i=1,k=0;i<nodos.length+1;i++,k++){
+    for(var j=temp,h=0;h<entradas.length;j++,h++){
+      m_mealy[i][j]=m_cambio[k][h];
+    }
+  }
+  for(var i=1;i<m_mealy.length;i++){
+    for(var j=entradas.length+1;j<m_mealy[0].length;j++){
+      for(var k=0;k<q0Primas.length;k++){
+        if (m_mealy[i][j]==q0Primas[k]) {
+          m_mealy[i][j]=salidas[k];
+        }
+      }
+    }
+  }
+  for(var i=1;i<m_mealy.length;i++){
+    for(var j=entradas.length+1;j<m_mealy[0].length;j++){
+      for(var k=0;k<nodos.length;k++){
+        if (m_mealy[i][j]==nodos[k]) {
+          m_mealy[i][j]="-";
+        }
+      }
+    }
+  }
   //console.log(matrizMoore);
 }
 function copiarMatriz(matrizMoore){
