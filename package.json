@@ -1,0 +1,27 @@
+{
+  "name": "tc",
+  "version": "1.0.0",
+  "description": "tc grafos",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Rzegarra/tc.git"
+  },
+  "author": "rafael zegarra huerta",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Rzegarra/tc/issues"
+  },
+  "homepage": "https://github.com/Rzegarra/tc",
+  "dependencies": {
+    "gulp": "^3.9.0"
+  },
+  "devDependencies": {
+    "browserify": "^12.0.1",
+    "gulp": "^3.9.0",
+    "gulp-webserver": "^0.9.1"
+  }
+}

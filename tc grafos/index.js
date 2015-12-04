@@ -20,6 +20,8 @@ var li = [
 
  ];
 graficar(links)
+graficar(links)
+
 function makeObj(obj) {
   var cambio=0;
   var sum=0;
@@ -154,7 +156,7 @@ function graficar(links){
       .nodes(d3.values(nodes))
       .links(links)
       .size([w, h])
-      .linkDistance(210)
+      .linkDistance(300)
       .charge(-300)
       .on("tick", tick)
       .start();
@@ -237,7 +239,7 @@ for (var i = 0; i < links.length; i++) {
 
   function tick() {
     linkPath.attr("d", function(d) {
-      return arcPath(false, d);
+      return arcPath(true, d);
     });
 
     textPath.attr("d", function(d) {

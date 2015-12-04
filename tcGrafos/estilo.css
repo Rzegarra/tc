@@ -1,0 +1,67 @@
+#inLinea{
+  display: block;
+  margin: auto;
+  width: 300px;
+}
+.buttonAccion{
+  display: inline-block;
+
+}
+.buttonsPlusDel{
+  display: inline-block;
+
+}
+.titulo1, .titulo2{
+  text-align: center;
+  margin-top: 20px;
+}
+.rellenarMealy{
+  display: inline-block;
+}
+
+.tabla{
+  margin-top: 20px;
+}
+
+.boo {
+  padding: auto;
+}
+table, td {
+   margin: auto;
+}
+#dato{
+  width:50px;
+}
+path.link {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.5px;
+}
+path.textpath {
+    fill: none;
+    stroke: none;
+}
+
+marker#licensing {
+  fill: green;
+}
+
+path.link.licensing {
+  stroke: green;
+}
+
+path.link.resolved {
+  stroke-dasharray: 0,2 1;
+}
+
+circle {
+  stroke: #000;
+  fill:#ddd;
+  stroke-width: 1px;
+
+}
+
+text {
+  font: 10px sans-serif;
+  pointer-events: none;
+}

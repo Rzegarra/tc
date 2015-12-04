@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo.css">
+    <script src="d3.js"></script>
+    <script src="jquerym.js"></script>
+    <title>holi</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+  </head>
+  <body>
+    <nav class="navbar navbar-default" role="navigation">
+  <!-- El logotipo y el icono que despliega el menú se agrupan
+       para mostrarlos mejor en los dispositivos móviles -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse"
+            data-target=".navbar-ex1-collapse">
+      <span class="sr-only">Desplegar navegación</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">CONVert</a>
+  </div>
+
+  <!-- Agrupar los enlaces de navegación, los formularios y cualquier
+       otro elemento que se pueda ocultar al minimizar la barra -->
+  <div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul class="nav navbar-nav">
+      <li id="buttonGlc" class="toggle"><a href="#">GLC</a></li>
+      <li id="buttonAfd" class="toggle"><a href="#">AFD</a></li>
+      <li id="buttonMoore" class="toggle"><a href="#">MOORE</a></li>
+      <li id="buttonMealy" class="toggle"><a href="#">MEALY</a></li>
+      <li id="buttonEr" class="toggle"><a href="#">ER</a></li>
+    </ul>
+
+  </div>
+</nav>
+<!-- <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    Convertir <b class="caret"></b>
+  </a>
+  <ul class="dropdown-menu">
+    <li><a href="#">glc</a></li>
+    <li class="divider"></li>
+    <li><a href="#">er</a></li>
+    <li class="divider"></li>
+    <li><a href="#">afd</a></li>
+    <li class="divider"></li>
+    <li><a href="#">Moore</a></li>
+    <li class="divider"></li>
+    <li><a href="#">Mealy</a></li>
+
+  </ul>
+</li> -->
+<div class="boo">
+  <div class="btn-group">
+    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">CONVERTIR</button>
+    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <span class="caret"></span>
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu">
+      <li id="moore"><a href="#">moore</a></li>
+      <li id="mealy"><a href="#">mealy</a></li>
+      <li id="glc"><a href="#">glc</a></li>
+      <li id="er"><a href="#">er</a></li>
+      <li id="afd"><a href="#">afd</a></li>
+    </ul>
+  </div>
+  <div class="buttonAccion">
+    <div class='buttonsPlusDel'>
+      <button  id='addCol' type='button' class='btn btn-primary'> +col </button>
+      <button  id='delCol' type='button' class='btn btn-info'> -col </button>
+      <button  id='addRow' type='button' class='btn btn-primary'> +fil </button>
+      <button  id='delRow' type='button' class='btn btn-info'> -fil </button>
+    </div>
+    </div>
+  <div class='rellenarMealy'>
+    <button  id="llena" type="button" class="btn btn-default ">Autollenar</button>
+  </div>
+</div>
+<div class="titulo1"><h4 id="titulo1">AFD</h4></div>
+    <div class='inp' >
+        <table id="tabla">
+          <tr>
+            <td>
+              <p id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+            <td>
+              <input type="text" id='dato'>
+            </td>
+          </tr>
+        </table>
+
+      </div>
+      <div class="titulo2"><h4 id="titulo2">AFD</h4></div>
+
+      <script src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="index.js"></script>
+
+  </body>
+</html>
