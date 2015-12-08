@@ -13,16 +13,15 @@ var matrizMoore=[[' ',  '0.05',  '0.1',   '0.25',  'salida'],
 var nodos=[];
 var q0Primas=[];
 var entradas=[];
-var abecedario=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','S','U','V','W','X','Y','Z'];
-var matrizABC=[];
 var salidas=[]
-var moore=[];
 var obj1={source:'q1',
           target:'q1',
           type:0};
 var links=[];
+//variables para llenar la matriz de moore a mealy
 var m_cambio=[];
 var m_mealy=[];
+///////////////
 function convertirAmealy(matrizMoore){
   //estados(matrizMoore);
   var help=0;
@@ -102,7 +101,6 @@ function estados(matrizMoore) {
   for (var i = 1; matrizMoore[i][0]!='q0.*'; i++) {
     help++;
   }
-  console.log(help);
   for (var i=1;help<matrizMoore.length;help++){
     nodos[i-1]=matrizMoore[help][0];
     i++;
@@ -139,30 +137,163 @@ function estados(matrizMoore) {
   console.log(links);
   console.log(matrizMoore);
   convertirAmealy(matrizMoore);
-  console.log(m_mealy);
-
 }
 
 $(convertir).on('click',function(evento){
-  //copiarMatriz(matrizMoore);
-  console.log('esta es la matrizABC'+matrizABC);
   estados(matrizMoore);
-  //crearMatrizABC();
-  //cambiarMatriz(matrizABC);
+  estadosMealy(matrizMealy);
+  console.log(nodosMealy);
   console.log(q0Primas);
-  console.log(abecedario);
   console.log(nodos);
   console.log(entradas);
-  //console.log(matrizABC);
   console.log(salidas);
-  console.log(moore);
-
+  console.log(m_mealy);
+  convertirMealyAMoore(matrizMealy);
   alert('csm profe y la asdasdsa')
 });
 
 $(addCol).on('click',function(event){
   alert('agregando col')
 })
+//////////convirtiendo de mealy a moore
+var matrizMealy=[[' ', '0.05','0.1', '0.25', '0.05', '0.1', '0.25'],
+                ['q0', 'q1',  'q2',  'q0',   '-',    '-',   '0.25'],
+                ['q1', 'q2',  'q3',  'q0',   '-',    '-',   '0.30'],
+                ['q2', 'q3',  'q0',  'q0',   '-',    '0.20','0.35'],
+                ['q3', 'q0',  'q0',  'q0',   '0.20', '0.25','0.40']];
+var nodosMealy=[];
+var entradasMealy=[];
+var salidasMealy=[];
+var ayudin=[];
+var matrizConvertidaMoore=[];
+var q0PrimasMealy=[];
+
+function estadosMealy(matrizMealy){
+  for(var i=1;i<matrizMealy.length;i++){
+    nodosMealy[i-1]=matrizMealy[i][0];
+  }
+  for(var i=1;i<(matrizMealy[0].length)/2;i++){
+    entradasMealy[i-1]=matrizMealy[0][i];
+  }
+  var temp=0;
+  for(var i=1;i<matrizMealy.length;i++){
+    for(var j=Math.floor(matrizMealy[0].length/2+1);j<matrizMealy[0].length;j++){
+      if(ayudin.length==0){
+        if(matrizMealy[i][j]!='-'){
+          ayudin[temp]=matrizMealy[i][j];
+          temp++;
+        }
+      }
+      else{
+        if(matrizMealy[i][j]!='-'){
+          for(var k=0;k<ayudin.length;k++){
+            if(ayudin[k]==matrizMealy[i][j]){
+              break;             
+            } 
+          }
+          ayudin[temp]=matrizMealy[i][j];
+          temp++;
+          }
+        }
+      }
+    }
+    ayudin.sort();
+    salidasMealy=eliminateDuplicates(ayudin);
+    for(var i=1;i<salidasMealy.length+1;i++){
+      q0PrimasMealy[i-1]='q0.'+i;
+    }   
+}
+function eliminateDuplicates(arr) {
+ var i,
+     len=arr.length,
+     out=[],
+     obj={};
+
+ for (i=0;i<len;i++) {
+    obj[arr[i]]=0;
+ }
+ for (i in obj) {
+    out.push(i);
+ }
+ return out;
+}
+function convertirMealyAMoore(matrizMealy){
+  for(var i=0;i<nodosMealy.length+salidasMealy.length+1;i++){
+    matrizConvertidaMoore[i]=[];
+  }
+  matrizConvertidaMoore[0][0]=' ';
+  matrizConvertidaMoore[0][entradasMealy.length+1]='salida';
+  console.log('aasdgfdgdfjdkfgjdkfgjkdfjgkdf');
+  for(var i=1;i<entradasMealy.length+1;i++){
+    console.log('holi boli');
+    matrizConvertidaMoore[0][i]=entradasMealy[i-1];
+  }
+  for (var i=1,j=matrizConvertidaMoore[0].length-1;i<salidasMealy.length+1;i++){
+    matrizConvertidaMoore[i][0]='qO.'+i;
+    matrizConvertidaMoore[i][j]=salidasMealy[i-1];
+  }
+  for(var i=salidasMealy.length+1;i<matrizConvertidaMoore.length;i++){
+    matrizConvertidaMoore[i][matrizConvertidaMoore[0].length-1]='-';
+  }
+  for (var i=1;i<salidasMealy.length+1;i++){
+    for(var j=1;j<entradasMealy.length+1;j++){
+      matrizConvertidaMoore[i][j]="q9 ";
+    }
+  }
+  for (var i=salidasMealy.length+1;i<matrizConvertidaMoore.length;i++){
+    matrizConvertidaMoore[i][0]=nodosMealy[i-1-salidasMealy.length];
+  }
+  var temp=[];
+  for (var i=1;i<entradasMealy.length+1;i++){
+    temp[i-1]=matrizMealy[1][i];
+  }
+  console.log(temp);
+  var salidaQPrima=0;
+  for(var i=0;i<temp.length;i++){
+    if(temp[i]=='q0'){
+      var auxiliar=[];
+      auxiliar[0]=matrizMealy[1][(temp.length*2)];
+      console.log('este es el auxiliar '+auxiliar[0]);
+      for(var j=0;j<salidasMealy.length;j++){
+        if (auxiliar[0]==salidasMealy[j]){
+          salidaQPrima=j;
+          break;
+        }
+      }
+    }
+  }
+  console.log('esto es la salidaqprima'+salidaQPrima);
+  console.log(salidasMealy[salidaQPrima]);
+  for(var i=0;i<temp.length;i++){
+    if(temp[i]=='q0'){
+      temp[i]='q0.'+(salidaQPrima+1);
+    }
+  }
+  console.log(temp);
+  console.log(salidaQPrima);
+  for(var i=1;i<salidasMealy.length+1;i++){
+    for(var j=1;j<matrizConvertidaMoore[0].length-1;j++){
+      matrizConvertidaMoore[i][j]=temp[j-1];
+    }
+  }
+  for(var i=salidasMealy.length+1;i<matrizConvertidaMoore.length;i++){
+    for(var j=1;j<matrizConvertidaMoore[0].length-1;j++){
+      if(matrizMealy[i-salidasMealy.length][j]=='q0'){
+        for (var k=0;k<salidasMealy.length;k++){
+          if(matrizMealy[i-salidasMealy.length][j+entradasMealy.length]==salidasMealy[k]){
+            matrizConvertidaMoore[i][j]=q0PrimasMealy[k];
+            break;
+          }
+        }
+        //matrizConvertidaMoore[i][j]='holi';
+      }
+      else{
+        matrizConvertidaMoore[i][j]=matrizMealy[i-salidasMealy.length][j];
+      }
+    }
+  }
+}
+
 
 
 /////////////////// graficando/////
