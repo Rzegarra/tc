@@ -1,11 +1,40 @@
-var obj=[[' ','0.05','0.1','0.25','0.05','0.1','0.25'],
-        ['q0','q1','q2','q0','-','-','0.25'],
-        ['q1','q2','q3','q0','-','-','0.30'],
-        ['q2','q3','q0','q0','-','0.2','0.35'],
-        ['q3','q0','q0','q0','0.2','0.25','0.4']];
+var matrizMealy=[[' ','0.05','0.1','0.25','0.05','0.1','0.25'],
+                ['q0','q1','q2','q0','-','-','0.25'],
+                ['q1','q2','q3','q0','-','-','0.30'],
+                ['q2','q3','q0','q0','-','0.2','0.35'],
+                ['q3','q0','q0','q0','0.2','0.25','0.4']];
+
+var matrizAfd=[[' ', 0  ,  1 ,'E'],
+              ['q0','q1','q0','-'],
+              ['q1','q2','-' ,'-'],
+              ['q2','q3','-' ,'-'],
+              ['q3', '-','q0', '1' ]];
+
+var matrizMoore=[[' ',  0.05,  0.1,    0.25,  'salida'],
+                ['q0.1','q1',  'q2',  'q0.2',  0.20],
+                ['q0.2','q1',  'q2',  'q0.2',  0.25],
+                ['q0.3','q1',  'q2',  'q0.2',  0.30],
+                ['q0.4','q1',  'q2',  'q0.2',  0.35],
+                ['q0.5','q1',  'q2',  'q0.2',  0.40],
+                //----------------------------------------
+                ['q0.*','q1',  'q2',  'q0.2','-'],
+                ['q1',  'q2',  'q3',  'q0.3','-'],
+                ['q2',  'q3',  'q0.1','q0.4','-'],
+                ['q3',  'q0.1','q0.2','q0.5','-']];
+
+var matrizGlc=[['A', '4B' ,  '5D', '2E' ,'1A'],
+               ['B','0A',  '--',  '--',  '--'],
+               ['C','3A',  '4B',  '0F',  '--'],
+               ['D','1E',  '1F',  '4F',  '--'],
+               ['E','2D',  '2E',  '0C',  '--'],
+               ['F','3A',  '3B',  '--',  '--'],];
+var arrayEr='((000|101)(000|010|101|111)|(010|111)(001|011|100))';
+
+var posicion='mealy';
 var nodos=[];
 var datos = [];
 var links=[];
+var matrizAfdConv=[];
 var temp;
 var repeticion='';
 var aumentaRepeticion=0;
@@ -16,27 +45,74 @@ var li = [
    {source: "q0", target: "q2", type: "101"},
    {source: "q2", target: "q3", type: "111"},
    {source: "q2", target: "q1", type: "101,111"}
-
  ];
+ function glcToAfd(obj) {
+   var nodoInicio='';
+   var nodoFin='';
+   var arista='';
+   var cambio=0;
+   var sum=0;
+   var temp=0;
+   var col=obj[0].length;
+   console.log('col    :'+col);
+
+   var fil=obj.length;
+   console.log('fil    :'+fil);
+   for (var i = 0; i < fil; i++) {
+     for (var j = 1; j < col; j++) {
+       var literal=obj[i][j];
+       var ultimo=literal.length-1;
+        if (literal!='--' && literal!='') {
+          nodoInicio=obj[i][0];
+          nodoFin=literal[ultimo]
+          arista=literal.slice(0,ultimo)
+          links[sum]={
+          source:nodoFin,
+          target:nodoInicio,
+          type:arista};
+          sum++;
+        }
+     }
+   }
+ }
+ function mealyToAfd(obj) {
+   var cambio=0;
+   var sum=0;
+   var temp=0;
+   var col=obj[0].length;
+   var fil=obj.length;
+   var start=obj[0][1];
+   //para ver donde se separa la matriz y poder
+   //elvaluar solo la mitad que necesitamos para
+   //desarrollar el grafo de AFD
+   for (var i2 = 2; i2<col; i2++) {
+     if(obj[0][i2]==start){
+       col=i2;
+     }
+   }
+   //creamos la matriz afd que tendra los datos de
+   // la matriz mealy
+
+   for (var i = 0; i < fil; i++) {
+     matrizAfdConv[i]=[];
+   }
+   for (var i = 0; i < fil; i++) {
+     for (var j = 0; j < col; j++) {
+       matrizAfdConv[i][j]=obj[i][j]
+     }
+   }
+   //llenamos el array de objetos para poder graficar
+
+ }
 // graficar(links)
-function makeAfd(obj) {
+function makeArrayGraph(obj) {
   var cambio=0;
   var sum=0;
-  var temp=0;
   var col=obj[0].length;
   var fil=obj.length;
-  var start=obj[0][1];
-
   //para ver donde se separa la matriz y poder
   //elvaluar solo la mitad que necesitamos para
   //desarrollar el grafo de AFD
-
-  for (var i2 = 2; i2<col; i2++) {
-    if(obj[0][i2]==start){
-      col=i2;
-    }
-  }
-
   //llenamos el array de objetos para poder graficar
   for (var i = 1; i < fil; i++) {
     if (i!=cambio && obj[i-1][col-1]==obj[i-1][col-2]) {
@@ -61,7 +137,6 @@ function makeAfd(obj) {
         // }
         // temp=i;
       }
-
       else {
         links[sum]={
         source:obj[i][j],
@@ -75,7 +150,6 @@ function makeAfd(obj) {
       console.log('inio= '+obj[i][0]+', fin= '+obj[i][j]+', dato= '+obj[0][j] +' *** ' + repeticion);
       //   // console.log('obj1 :'+obj1.target);
     }
-
   }
   // console.log(links);
   for (var i = 0; i < links.length; i++) {
@@ -84,9 +158,7 @@ function makeAfd(obj) {
 }
 function llenar(obj){
   var rows=$('tr').length;
-  console.log('tamaño de filas = '+ rows);
   var columns=$('tr:first td').length;
-  console.log('tamaño de columnas = '+ columns);
   var a=$(dato);
   var temp=0;
   for (var i = 0; i < rows; i++) {
@@ -96,7 +168,14 @@ function llenar(obj){
     }
   }
 }
-function makeVec (){
+function llenarGlc(obj) {
+
+}
+function llenarEl(obj) {
+  $(inLinea).val(obj);
+}
+
+function readInput (){
   var rows=$('tr').length;
   console.log('tamaño de filas = '+ rows);
   var columns=$('tr:first td').length;
@@ -144,9 +223,60 @@ function makeVec (){
 
 // $(convertir).on('click',function(evento){
 //   estados(obj);
-//   makeAfd(obj);
+//   makeArrayGraph(obj);
 // });
+var inputMatrizGlc ='<table class="tablaGlc">'+
+  '<tr>'+
+    '<td><input type="text" id="dato">-></td>'+
+    '<td><input type="text" id="dato"></td>'+
+    '<td><input type="text" id="dato"></td>'+
+    '<td><input type="text" id="dato"></td>'+
+    '<td><input type="text" id="dato"></td>'+
+  '</tr>'+
+  '<tr>'+
+  '  <td><input type="text" id="dato">-></td>'+
+  '  <td><input type="text" id="dato"></td>'+
+  '  <td><input type="text" id="dato"></td>'+
+    '<td><input type="text" id="dato"></td>'+
+    '<td><input type="text" id="dato"></td>'+
+  '</tr>'+
+  '<tr>'+
+  '  <td><input type="text" id="dato">-></td>'+
+  '  <td><input type="text" id="dato"></td>'+
+  '  <td><input type="text" id="dato"></td>'+
+    '<td><input type="text" id="dato"></td>'+
+    '<td><input type="text" id="dato"></td>'+
+  '</tr>'+
+  '<tr>'+
+  '  <td><input type="text" id="dato">-></td>'+
+  '  <td><input type="text" id="dato"></td>'+
+  '  <td><input type="text" id="dato"></td>'+
+    '<td><input type="text" id="dato"></td>'+
+    '<td><input type="text" id="dato"></td>'+
+  '</tr>'+
+  '<tr>'+
+  '  <td><input type="text" id="dato">-></td>'+
+  '  <td><input type="text" id="dato"></td>'+
+  '  <td><input type="text" id="dato"></td>'+
+    '<td><input type="text" id="dato"></td>'+
+    '<td><input type="text" id="dato"></td>'+
+  '</tr>'+
+  '<tr>'+
+  '  <td><input type="text" id="dato">-></td>'+
+  '  <td><input type="text" id="dato"></td>'+
+  '  <td><input type="text" id="dato"></td>'+
+    '<td><input type="text" id="dato"></td>'+
+    '<td><input type="text" id="dato"></td>'+
+  '</tr>'
+var convOptionsTotal='<li id="moore"><a href="#">moore</a></li>'+
+'<li id="mealy"><a href="#">mealy</a></li>'+
+'<li id="glc"><a href="#">glc</a></li>'+
+'<li id="er"><a href="#">er</a></li>'+
+'<li id="afd"><a href="#">afd</a></li>'
 
+var convOptions='<li id="glc"><a href="#">glc</a></li>'+
+'<li id="er"><a href="#">er</a></li>'+
+'<li id="afd"><a href="#">afd</a></li>'
 
 var inputMatriz="<table id='tabla'><tr><td><p id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td></tr><tr><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td></tr><tr><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td></tr><tr><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td></tr><tr><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td><td><input type='text' id='dato'></td></tr></table>"
 var buttonsPlusDel="<div class='buttonsPlusDel'>"+
@@ -163,44 +293,162 @@ function nuevo (){
   $('.buttonAccion').empty();
   $('.inp').empty();
   $('svg').remove();
+  $('.convertir').empty();
 }
+function delCol () {
+  var rows=$('tr').length;
+  var columns=$('tr:first td').length;
+  for (var i = 0; i < rows; i++) {
+    $('tr:eq('+i+') td:last').remove();
+}
+  }
+  function addRow() {
+    var rows=$('tr').length;
+    var columns=$('tr:first td').length;
+    $('table').append(newRow)
+    for (var i = 0; i < columns; i++) {
+      $('tr:last').append("<td><input type='text' id='dato'></td>");
+    }
+  }
+
+  function addRowGlc() {
+    var rows=$('tr').length;
+    var columns=$('tr:first td').length;
+    $('table').append(newRow)
+    $('tr:last').append("<td><input type='text' id='dato'>-></td>");
+    for (var i = 1; i < columns; i++) {
+      $('tr:last').append("<td><input type='text' id='dato'></td>");
+    }
+  }
+
 var inputLinea="<input type='text' id='inLinea' >"
 
 //botones para decidir de donde se convertira.
 
 $('#buttonGlc').on('click',function(){
+  posicion='glc'
+  console.log('posicion : '+ posicion);
   nuevo();
-  $('.buttonAccion').append(buttonsPlusDelGlc)
-  $('.inp').append(inputLinea);
+  $('.buttonAccion').append(buttonsPlusDel)
+  $('.inp').append(inputMatrizGlc);
+  $('.convertir').append(convOptions);
   $('#titulo1').text('GLC');
-  $('#addGlc').on('click',function(){
-    $('.inp').append(inputLinea);
+  $('.convertir').find('#glc').remove();
+  $('#addCol').on('click',function(){
+    console.log('addCol');
+    $('tr').append(newColumn)
   });
-  $('#delGlc').on('click',function(){
-    $('#inLinea:last').remove();
+  $('#delCol').on('click',function(){
+    delCol()
   });
+  $('#addRow').on('click',function(){
+    addRowGlc();
+  });
+  $('#delRow').on('click',function(){
+    $('tr:last').remove();
+  });
+
+  $('#afd').on('click',function(){
+    console.log('click afd');
+    $('svg').remove();
+    links=[];
+    console.log('estoy en glc');
+    readInput();
+    glcToAfd(datos);
+    graficar(links);
+    $('#titulo2').text('AFD')
+  });
+
 });
 $('#buttonAfd').on('click',function(){
+  posicion='afd'
+  console.log('posicion : '+ posicion);
   nuevo()
+  $('.convertir').append(convOptions);
   $('.buttonAccion').append(buttonsPlusDel)
   $('.inp').append(inputMatriz)
+  $('.convertir').find('#afd').remove();
+
+  delCol();
+  delCol();
+  delCol();
   $('#titulo1').text('AFD')
+  $('#addCol').on('click',function(){
+    console.log('addCol');
+    $('tr').append(newColumn)
+  });
+  $('#delCol').on('click',function(){
+    delCol()
+  });
+  $('#addRow').on('click',function(){
+    addRow();
+  });
+  $('#delRow').on('click',function(){
+    $('tr:last').remove();
+  });
 });
+
 $('#buttonMoore').on('click',function(){
+  posicion='moore'
+  console.log('posicion : '+ posicion);
   nuevo()
+  $('.convertir').append(convOptionsTotal);
   $('.buttonAccion').append(buttonsPlusDel)
   $('.inp').append(inputMatriz)
+  $('.convertir').find('#moore').remove();
+
+  for (var i = 0; i < 5; i++) {
+    addRow();
+  }
+  delCol();
+  delCol();
   $('#titulo1').text('MOORE')
+  $('#addCol').on('click',function(){
+    console.log('addCol');
+    $('tr').append(newColumn)
+  });
+  $('#delCol').on('click',function(){
+    delCol()
+  });
+  $('#addRow').on('click',function(){
+    addRow();
+  });
+  $('#delRow').on('click',function(){
+    $('tr:last').remove();
+  });
 });
+
 $('#buttonMealy').on('click',function(){
+  posicion='mealy'
+  console.log('posicion : '+ posicion);
   nuevo()
+  $('.convertir').append(convOptionsTotal);
   $('.buttonAccion').append(buttonsPlusDel)
   $('.inp').append(inputMatriz)
+  $('.convertir').find('#mealy').remove();
+
   $('#titulo1').text('MEALY')
+  $('#addCol').on('click',function(){
+    console.log('addCol');
+    $('tr').append(newColumn)
+  });
+  $('#delCol').on('click',function(){
+    delCol()
+  });
+  $('#addRow').on('click',function(){
+    addRow();
+  });
+  $('#delRow').on('click',function(){
+    $('tr:last').remove();
+  });
 });
 $('#buttonEr').on('click',function(){
+  posicion='er'
+  console.log('posicion : '+ posicion);
   nuevo();
+  $('.convertir').append(convOptions);
   $('.inp').append(inputLinea);
+  $('.convertir').find('#er').remove();
   $('#titulo1').text('ER')
 });
 
@@ -210,9 +458,8 @@ $('#moore').on('click',function(){
   $('svg').remove();
   links=[];
   $('#titulo2').text('MOORE')
-  makeVec();
-  makeAfd(datos);
-  console.log('graficando.......');
+  readInput();
+  makeArrayGraph(datos);
   graficar(links);
 });
 $('#mealy').on('click',function(){
@@ -231,8 +478,20 @@ $('#er').on('click',function(){
   $('#titulo2').text('ER')
 });
 $('#afd').on('click',function(){
+  console.log('click afd');
   $('svg').remove();
   links=[];
+  if(posicion=='mealy'){
+    readInput();
+    mealyToAfd(datos);
+    makeArrayGraph(matrizAfdConv);
+    graficar(links);
+  }
+  if (posicion=='glc') {
+    console.log('estoy en glc');
+    readInput();
+    glcToAfd(datos);
+  }
   $('#titulo2').text('AFD')
 });
 
@@ -240,36 +499,36 @@ $('#afd').on('click',function(){
 
 
 
-$('#addCol').on('click',function(){
-  estados(obj);
-  $('tr').append(newColumn)
-});
+
 
 $('#llena').on('click',function(){
-  console.log('llenando');
-  llenar(obj);
+  if (posicion=='mealy') {
+    llenar(matrizMealy);
+  }
+  else if (posicion=='afd') {
+    llenar(matrizAfd)
+  }
+  else if (posicion=='moore') {
+    llenar(matrizMoore)
+  }
+  else if (posicion=='er') {
+    llenarEl(arrayEr)
+  }
+  else if (posicion=='glc') {
+    llenar(matrizGlc)
+  }
+
 });
 
+$('#addCol').on('click',function(){
+  console.log('addCol');
+  $('tr').append(newColumn)
+});
 $('#delCol').on('click',function(){
-  var rows=$('tr').length;
-  console.log('tamaño de filas = '+ rows);
-  var columns=$('tr:first td').length;
-  console.log('tamaño de columnas = '+ columns);
-  for (var i = 0; i < rows; i++) {
-    $('tr:eq('+i+') td:last').remove();
-  }
-  console.log('entre');
+  delCol()
 });
 $('#addRow').on('click',function(){
-  var rows=$('tr').length;
-  console.log('tamaño de filas = '+ rows);
-  var columns=$('tr:first td').length;
-  console.log('tamaño de columnas = '+ columns);
-  $('table').append(newRow)
-  for (var i = 0; i < columns; i++) {
-    $('tr:last').append("<td><input type='text' id='dato'></td>");
-  }
-
+  addRow();
 });
 $('#delRow').on('click',function(){
   $('tr:last').remove();
